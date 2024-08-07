@@ -1,4 +1,4 @@
 export const colors={
-    heading:'text-blue-900',
+    heading:'text-green-500',
     button:'#50c878'
 }
