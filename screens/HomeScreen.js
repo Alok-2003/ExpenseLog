@@ -37,7 +37,7 @@ export default function HomeScreen() {
           className="w-60 h-60"></Image>
       </View>
 
-      <View className="px-4">
+      <View className="px-4 space-y-3">
         <View className="flex-row justify-between items-center mb-4">
           <Text className={`${colors.heading} font-bold text-xl`}>
             Recent Trips
@@ -61,7 +61,7 @@ export default function HomeScreen() {
             className="mx-1 "
             renderItem={({item}) => {
               return (
-                <TouchableOpacity className="bg-white  p-3  rounded-2xl mb-3 shadow-sm">
+                <TouchableOpacity onPress={()=> navigation.navigate('TripExpenses',{...item})} className="bg-white  p-3  rounded-2xl mb-3 shadow-sm">
                   <Image source={randomImage()} className="w-36 h-36" />
                   <Text className="">{item.place}</Text>
                   <Text className="">{item.country}</Text>
