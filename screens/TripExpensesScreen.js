@@ -28,11 +28,9 @@ export default function TripExpensesScreen(props) {
           <View>
             <Text
               className={`${colors.heading} text-xl font-bold text-center  `}>
-              {' '}
               {place}
             </Text>
             <Text className={`${colors.heading} text-xs text-center  `}>
-              {' '}
               {country}
             </Text>
           </View>

@@ -1,7 +1,7 @@
 import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
-import ScreenWrapper from './ScreenWrapper';
-import BackButton from './BackButton';
+import ScreenWrapper from '../components/ScreenWrapper';
+import BackButton from '../components/BackButton';
 import {colors} from '../theme';
 import {useNavigation} from '@react-navigation/native';
 
