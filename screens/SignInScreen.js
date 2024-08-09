@@ -7,18 +7,32 @@ import {useNavigation} from '@react-navigation/native';
 import Snackbar from 'react-native-snackbar';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../config/firebase';
+import {useDispatch, useSelector} from 'react-redux';
+import Loading from '../components/Loading';
+import {setUserLoading} from '../redux/slices/user';
 
 export default function SignInScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const {userLoading} = useSelector(state => state.user);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const handleSubmit = async () => {
     if (email && password) {
       // navigation.goBack();
       // navigation.navigate('Home');
-      await signInWithEmailAndPassword(auth, email, password);
+      try {
+        dispatch(setUserLoading(true));
+        await signInWithEmailAndPassword(auth, email, password);
+        dispatch(setUserLoading(false));
+      } catch (error) {
+        dispatch(setUserLoading(false));
+        Snackbar.show({
+          text: error.message,
+          backgroundColor: 'red',
+        });
+      }
     } else {
       Snackbar.show({
         text: 'Email and Password are required',
@@ -73,14 +87,18 @@ export default function SignInScreen() {
           </View>
         </View>
         <View>
-          <TouchableOpacity
-            onPress={handleSubmit}
-            style={{backgroundColor: colors.button}}
-            className="my-6 rounded-full p-3 shadow-sm mx-2">
-            <Text className="text-center text-white text-lg font-bold">
-              Sign In
-            </Text>
-          </TouchableOpacity>
+          {userLoading ? (
+            <Loading />
+          ) : (
+            <TouchableOpacity
+              onPress={handleSubmit}
+              style={{backgroundColor: colors.button}}
+              className="my-6 rounded-full p-3 shadow-sm mx-2">
+              <Text className="text-center text-white text-lg font-bold">
+                Sign In
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </ScreenWrapper>

@@ -7,10 +7,15 @@ import {useNavigation} from '@react-navigation/native';
 import Snackbar from 'react-native-snackbar';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserLoading } from '../redux/slices/user';
+import Loading from '../components/Loading';
 
 export default function SignUpScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {userLoading} = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   const navigation = useNavigation();
 
@@ -18,7 +23,18 @@ export default function SignUpScreen() {
     if (email && password) {
       // navigation.goBack();
       // navigation.navigate('Home');
-      createUserWithEmailAndPassword(auth,email,password)
+      
+      try {
+        dispatch(setUserLoading(true));
+        await createUserWithEmailAndPassword(auth,email,password);
+        dispatch(setUserLoading(false));
+      } catch (error) {
+        dispatch(setUserLoading(false));
+        Snackbar.show({
+          text: error.message,
+          backgroundColor: 'red',
+        });
+      }
     } else {
       Snackbar.show({
         text: 'Email and Password are required',
@@ -66,7 +82,10 @@ export default function SignUpScreen() {
           </View>
         </View>
         <View>
-          <TouchableOpacity
+        {userLoading ? (
+            <Loading />
+          ) : (
+            <TouchableOpacity
             onPress={handleSubmit}
             style={{backgroundColor: colors.button}}
             className="my-6 rounded-full p-3 shadow-sm mx-2">
@@ -74,6 +93,8 @@ export default function SignUpScreen() {
               Sign Up
             </Text>
           </TouchableOpacity>
+          )}
+          
         </View>
       </View>
     </ScreenWrapper>

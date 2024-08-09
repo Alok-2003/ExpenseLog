@@ -1,10 +1,14 @@
 import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ScreenWrapper from '../components/ScreenWrapper';
 import {colors} from '../theme';
 import randomImage from '../assets/images/randomImage';
 import EmptyList from '../components/EmptyList';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import { signOut } from 'firebase/auth';
+import { auth, tripsRef } from '../config/firebase';
+import { useSelector } from 'react-redux';
+import { getDocs, query, where } from 'firebase/firestore';
 
 var items = [
   {id: 1, place: 'Gujrat', country: 'India'},
@@ -19,6 +23,30 @@ var items = [
 
 export default function HomeScreen() {
   const navigation = useNavigation();
+
+  const {user}= useSelector(state=>state.user);
+  const [trips,setTrips]= useState([])
+
+  const isFocused= useIsFocused()
+
+  const fetchTrips = async ()=>{
+    const q= query(tripsRef,where("userId","==",user.uid));
+    const querySnapshot = await getDocs(q);
+    let data=[]
+    querySnapshot.forEach(doc=>{
+      console.log("Document",doc.data())
+      data.push({...doc.data(), id:  doc.id})
+    })
+    setTrips(data)
+  }
+
+  useEffect(()=>{
+    if(isFocused)
+    fetchTrips()
+  },[isFocused])
+  const handleLogout= async()=>{
+    await signOut(auth);
+  }
   return (
     <ScreenWrapper className="flex-1">
       <View className="flex-row justify-between items-center p-4">
@@ -26,7 +54,7 @@ export default function HomeScreen() {
           className={`${colors.heading} text-blue-400 font-bold text-3xl shadow-`}>
           ExpenseLog
         </Text>
-        <TouchableOpacity className="p-2 px-3 bg-white border border-gray-700 rounded-full">
+        <TouchableOpacity onPress={handleLogout} className="p-2 px-3 bg-white border border-gray-700 rounded-full">
           <Text className={colors.heading}>Logout</Text>
         </TouchableOpacity>
       </View>
@@ -48,7 +76,7 @@ export default function HomeScreen() {
         </View>
         <View style={{height: 430}}>
           <FlatList
-            data={items}
+            data={trips}
             numColumns={2}
             ListEmptyComponent={
               <EmptyList message={"You haven't recorded any trips yet"} />

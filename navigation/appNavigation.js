@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { onAuthStateChanged } from 'firebase/auth';
 import { setUser } from '../redux/slices/user';
 import { auth } from '../config/firebase';
+import 'firebase/auth'
 
 const Stack = createNativeStackNavigator();
 
@@ -20,7 +21,7 @@ export default function AppNavigation() {
   const dispatch= useDispatch();
 
   onAuthStateChanged(auth,u=>{
-    console.log("Got User",u);
+    // console.log("Got User",u);
     dispatch(setUser(u));
   })
   if (user) {
@@ -38,9 +39,9 @@ export default function AppNavigation() {
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Welcome" >
+          <Stack.Screen options={{headerShown:false}} name="Welcome" component={WelcomeScreen} />
           <Stack.Screen options={{headerShown:false,presentation:'modal'}} name="SignIn" component={SignInScreen} />
           <Stack.Screen options={{headerShown:false,presentation:'modal'}} name="SignUp" component={SignUpScreen} />
-          <Stack.Screen options={{headerShown:false}} name="Welcome" component={WelcomeScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );
