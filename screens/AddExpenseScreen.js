@@ -5,19 +5,42 @@ import BackButton from '../components/BackButton';
 import {colors} from '../theme';
 import {useNavigation} from '@react-navigation/native';
 import {categories} from '../constants';
+import Snackbar from 'react-native-snackbar';
+import { addDoc } from 'firebase/firestore';
+import { expensesRef } from '../config/firebase';
+import Loading from '../components/Loading';
 
-export default function AddExpenseScreen() {
+
+export default function AddExpenseScreen(props) {
+let {id} = props.route.params;
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('');
 
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
 
-  const handleAddExpense = () => {
+
+  const handleAddExpense =async () => {
     if (title && amount && category) {
-      navigation.goBack();
+      // navigation.goBack();
+      setLoading(true);
+      let doc= await addDoc(expensesRef,{
+        title,
+        amount,
+        category,
+        tripId:id
+      })
+      setLoading(false);
+    if (doc && doc.id) { navigation.goBack();}
     } else {
+      Snackbar.show({
+        text: 'Please fill all the fields',
+        backgroundColor: 'red',
+      });
     }
+    
+
   };
   return (
     <ScreenWrapper>
@@ -80,7 +103,10 @@ export default function AddExpenseScreen() {
         </View>
 
         <View>
-          <TouchableOpacity
+        {loading ? (
+            <Loading />
+          ) : (
+            <TouchableOpacity
             onPress={handleAddExpense}
             style={{backgroundColor: colors.button}}
             className="my-6 rounded-full p-3 shadow-sm mx-2">
@@ -88,6 +114,8 @@ export default function AddExpenseScreen() {
               Add Expense
             </Text>
           </TouchableOpacity>
+          )}
+          
         </View>
       </View>
     </ScreenWrapper>

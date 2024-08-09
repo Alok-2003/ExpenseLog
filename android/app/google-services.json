@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "525762256837",
+    "project_id": "expenselog-ca6f2",
+    "storage_bucket": "expenselog-ca6f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525762256837:android:dbd7faa36591853cf7f5ac",
+        "android_client_info": {
+          "package_name": "com.expenselog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "525762256837-e0ghg4v5vcf8jsluqefsmc0c1sj60i0p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.expenselog",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "525762256837-gp5ljnhlk835tqbic32o11s7ljotqr1c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXLgS2heTutj4agFmJbpzM8niOwnL1cOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "525762256837-gp5ljnhlk835tqbic32o11s7ljotqr1c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "525762256837-4307rkqp2c8t2de375cjokp2m0esl8jg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.ExpenseLog"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
