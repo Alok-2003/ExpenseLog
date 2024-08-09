@@ -30,7 +30,7 @@ export default function WelcomeScreen() {
           <TouchableOpacity onPress={()=> navigation.navigate('SignUp')} className="shadow p-3 rounded-full " style={{backgroundColor:colors.button}}  >
             <Text
               className={`${colors.heading} text-center text-white font-bold text-lg `}>
-              Sign In
+              Sign Up
             </Text>
           </TouchableOpacity>
         </View>
