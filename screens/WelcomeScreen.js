@@ -10,6 +10,8 @@ import {
 } from '@react-native-google-signin/google-signin';
 import {GoogleAuthProvider, signInWithCredential} from 'firebase/auth';
 import { auth } from '../config/firebase';
+import FastImage from 'react-native-fast-image';
+
 
 GoogleSignin.configure({
   webClientId:
@@ -63,8 +65,12 @@ export default function WelcomeScreen() {
         </View>
         <View className="mx-5 mb-20">
           <Text
-            className={`${colors.heading} text-center font-bold text-4xl mb-10`}>
+            className={`${colors.heading} text-center font-bold text-4xl mb-2`}>
             ExpenseLog
+          </Text>
+          <Text
+            className={`${colors.heading} text-center font-ligth text-xl mb-10`}>
+            Made with love by Alok Kumar Yadav
           </Text>
           <TouchableOpacity
             onPress={() => navigation.navigate('SignIn')}

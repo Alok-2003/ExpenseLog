@@ -46,7 +46,7 @@ export default function SignUpScreen() {
     <ScreenWrapper>
       <View className="flex justify-betwen h-full mx-4">
         <View className="mb-2">
-          <View className="relative ">
+          <View className="relative mt-4">
             <View className="absolute top-0 left-0">
               <BackButton />
             </View>

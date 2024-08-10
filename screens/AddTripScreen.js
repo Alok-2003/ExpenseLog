@@ -61,7 +61,7 @@ export default function AddTripScreen() {
 
           <View className="space-y-2 mx-2">
             <Text className={`${colors.heading} text-lg font-bold`}>
-              Where on Earth?
+              In which country on earth?
             </Text>
             <TextInput
               value={place}
@@ -69,7 +69,7 @@ export default function AddTripScreen() {
               className="p-4 bg-white rounded-full mb-3 "
             />
             <Text className={`${colors.heading} text-lg font-bold`}>
-              Country
+              In which city?
             </Text>
             <TextInput
               value={country}
